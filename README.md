@@ -23,7 +23,7 @@ Traditional student club fund management often relies on single-person custody o
 | **Network** | Ethereum Sepolia Testnet |
 | **Contract Address** | `0xb9a0f06e6c0D54d69c5C4dD10dE08FF2ABB41A6f` |
 | **Verification Status** | Source-code verification succeeded via Routescan |
-| **Block Explorer** | [View on Sepolia Routescan](https://sepolia.routescan.io/address/0xb9a0f06e6c0D54d69c5C4dD10dE08FF2ABB41A6f) \| [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0xb9a0f06e6c0D54d69c5C4dD10dE08FF2ABB41A6f) |
+| **Block Explorer** | [View on Sepolia Routescan](https://testnet.routescan.io/address/0xb9a0f06e6c0D54d69c5C4dD10dE08FF2ABB41A6f?chainid=11155111) \| [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0xb9a0f06e6c0D54d69c5C4dD10dE08FF2ABB41A6f) |
 
 ---
 
