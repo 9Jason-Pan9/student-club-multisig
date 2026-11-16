@@ -21,9 +21,9 @@ Traditional student club fund management often relies on single-person custody o
 | Item | Details |
 | :--- | :--- |
 | **Network** | Ethereum Sepolia Testnet |
-| **Contract Address** | `0x3Dc45ad08864C77C4D9155b13C441A525edf7C1c` |
-| **Verification Status** | Verified (100% Exact Source Code Match) |
-| **Block Explorer** | [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0x3Dc45ad08864C77C4D9155b13C441A525edf7C1c) |
+| **Contract Address** | `0xb9a0f06e6c0D54d69c5C4dD10dE08FF2ABB41A6f` |
+| **Verification Status** | Verified (Exact Source Code Match) |
+| **Block Explorer** | [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0xb9a0f06e6c0D54d69c5C4dD10dE08FF2ABB41A6f) |
 
 ---
 
@@ -51,8 +51,7 @@ Traditional student club fund management often relies on single-person custody o
 
 ```text
 ├── contracts/
-│   ├── StudentClubMultiSig.sol          # Production contract deployed & verified on Sepolia
-│   └── StudentClubTreasuryAudit.sol     # Gas-optimized & static-analysis refactored contract
+│   └── StudentClubTreasuryAudit.sol     # Deployed & verified 5-of-5 multi-sig treasury contract
 ├── docs/
 │   └── CDS528_Project_Report.pdf        # Final technical report & security audit documentation
 └── README.md                            # Project documentation
@@ -98,7 +97,7 @@ Traditional student club fund management often relies on single-person custody o
 
 ### 3. Deployment
 1. Navigate to the **Deploy & Run Transactions** tab.
-2. Set Environment to **Injected Provider - MetaMask** (connected to Sepolia) or **Remix VM** for local testing.
+2. Set Environment to **Browser Extension (Sepolia Testnet - MetaMask)**.
 3. Pass an array of **5 unique, non-zero Ethereum addresses** into the `_signers` constructor parameter:
    ```text
    ["0xAddress1...", "0xAddress2...", "0xAddress3...", "0xAddress4...", "0xAddress5..."]
@@ -106,7 +105,7 @@ Traditional student club fund management often relies on single-person custody o
 4. Click **Deploy** and confirm the transaction in MetaMask.
 
 ### 4. End-to-End Verification Scenarios
-- **Funding**: Call `deposit()` with test ETH (e.g., `0.05 ETH`) and verify via `getTreasuryBalance()`.
+- **Funding**: Call `deposit()` with test ETH (e.g., `0.01 ETH`) and verify via `getTreasuryBalance()`.
 - **Normal Approval Flow**: Submit a proposal with Manager 1 (`1/5`), confirm with Managers 2–5 (`5/5`), and call `executeProposal(0)` to verify atomic ETH transfer.
 - **Revocation Flow**: Confirm a proposal, call `revokeConfirmation(id)` prior to execution, and confirm the tally decrements by 1.
 - **Security & Boundary Checks**:
