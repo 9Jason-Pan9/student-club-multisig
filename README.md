@@ -22,8 +22,8 @@ Traditional student club fund management often relies on single-person custody o
 | :--- | :--- |
 | **Network** | Ethereum Sepolia Testnet |
 | **Contract Address** | `0xb9a0f06e6c0D54d69c5C4dD10dE08FF2ABB41A6f` |
-| **Verification Status** | Verified (Exact Source Code Match) |
-| **Block Explorer** | [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0xb9a0f06e6c0D54d69c5C4dD10dE08FF2ABB41A6f) |
+| **Verification Status** | Verified via Routescan / Sepolia Etherscan |
+| **Block Explorer** | [View on Sepolia Routescan](https://sepolia.routescan.io/address/0xb9a0f06e6c0D54d69c5C4dD10dE08FF2ABB41A6f) \| [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0xb9a0f06e6c0D54d69c5C4dD10dE08FF2ABB41A6f) |
 
 ---
 
@@ -33,15 +33,15 @@ Traditional student club fund management often relies on single-person custody o
 - **Auto-Confirmation on Submission**: The manager who submits a proposal automatically casts the first confirmation (`1/5`), avoiding redundant transactions.
 - **Revocable Approvals**: Managers can revoke their confirmation prior to execution if circumstances change (`revokeConfirmation`).
 - **7-Day Default Expiry**: Proposals automatically expire once `block.timestamp` passes the deadline.
-- **Gas-Optimized Static Audit Version (`StudentClubTreasuryAudit.sol`)**: Refactored with Solidity `^0.8.20` Custom Errors, unrolled constructor initialization, and `bytes32` reason hashes to achieve clean static analysis results across Remix and Solhint.
+- **Gas-Optimized Static Audit Version (`StudentClubTreasuryAudit`)**: Refactored with Solidity `^0.8.20` Custom Errors, unrolled constructor initialization, and `bytes32` reason hashes to achieve clean static analysis results across Remix and Solhint.
 
 ---
 
 ## 🛠 Technology Stack
 
-- **Smart Contract Language**: Solidity `^0.8.20`
+- **Smart Contract Language**: Solidity `^0.8.20` (compiled with `v0.8.34+commit.80d5c536`, optimizer enabled at `200` runs)
 - **Development & Testing IDE**: Remix Ethereum IDE
-- **Static Analysis & Linting**: Remix Static Analyzer & Solhint
+- **Static Analysis & Linting**: Slither & Remix Static Analyzer
 - **Wallet & Testnet Deployment**: MetaMask on Ethereum Sepolia Testnet
 - **License**: MIT
 
@@ -50,16 +50,13 @@ Traditional student club fund management often relies on single-person custody o
 ## 📂 Repository Structure
 
 ```text
-├── contracts/
-│   └── StudentClubTreasuryAudit.sol     # Deployed & verified 5-of-5 multi-sig treasury contract
-├── docs/
-│   └── CDS528_Project_Report.pdf        # Final technical report & security audit documentation
-└── README.md                            # Project documentation
+├── StudentClubMultiSig_modified.sol     # Deployed & verified 5-of-5 multi-sig treasury contract (StudentClubTreasuryAudit)
+└── README.md                            # Project documentation and deployment guide
 ```
 
 ---
 
-## ⚙️ Smart Contract Interface (`StudentClubTreasuryAudit.sol`)
+## ⚙️ Smart Contract Interface (`StudentClubTreasuryAudit`)
 
 ### State-Changing Functions
 
@@ -90,10 +87,10 @@ Traditional student club fund management often relies on single-person custody o
 - Access to [Remix Ethereum IDE](https://remix.ethereum.org/).
 
 ### 2. Compilation
-1. Open Remix IDE and load `StudentClubTreasuryAudit.sol` into the `contracts/` workspace.
+1. Open Remix IDE and load `StudentClubMultiSig_modified.sol` from the repository root into your workspace.
 2. Navigate to the **Solidity Compiler** tab.
-3. Select compiler version **`0.8.20`** (or compatible `0.8.x`) with EVM version set to default and optimization enabled (`200` runs).
-4. Click **Compile StudentClubTreasuryAudit.sol** and confirm zero compilation errors.
+3. Select compiler version **`0.8.34`** (or compatible `^0.8.20`) with EVM version set to default and optimization enabled (`200` runs).
+4. Select the **`StudentClubTreasuryAudit`** contract, click **Compile**, and confirm zero compilation errors.
 
 ### 3. Deployment
 1. Navigate to the **Deploy & Run Transactions** tab.
@@ -102,7 +99,7 @@ Traditional student club fund management often relies on single-person custody o
    ```text
    ["0xAddress1...", "0xAddress2...", "0xAddress3...", "0xAddress4...", "0xAddress5..."]
    ```
-4. Click **Deploy** and confirm the transaction in MetaMask.
+4. Ensure `Value` is `0`, click **Deploy**, and confirm the transaction in MetaMask.
 
 ### 4. End-to-End Verification Scenarios
 - **Funding**: Call `deposit()` with test ETH (e.g., `0.01 ETH`) and verify via `getTreasuryBalance()`.
@@ -110,7 +107,7 @@ Traditional student club fund management often relies on single-person custody o
 - **Revocation Flow**: Confirm a proposal, call `revokeConfirmation(id)` prior to execution, and confirm the tally decrements by 1.
 - **Security & Boundary Checks**:
   - Calling restricted functions from a non-manager account reverts with `NotAuthorized()`.
-  - Calling `executeProposal` with `< 5` votes reverts with `QuorumNotReached()`.
+  - Calling `executeProposal` with `< 5` votes reverts with `QuorumNotReached()` (`0xaa26a693`).
   - Confirming or executing past `deadline` reverts with `TimeExpired()`.
 
 ---
